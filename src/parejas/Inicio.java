@@ -43,7 +43,6 @@ public class Inicio extends JFrame{
             juego.setSize(1250, 950);
 
             inicio.setVisible(false); //cerramos la ventana de inicio
-
         }
     }
 

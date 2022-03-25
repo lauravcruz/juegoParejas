@@ -4,10 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-
 import static parejas.Inicio.inicio;
-import static parejas.Inicio.juego;
-
 
 public class Parejas extends JFrame {
 
