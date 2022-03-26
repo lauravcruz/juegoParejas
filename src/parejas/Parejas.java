@@ -56,22 +56,22 @@ public class Parejas extends JFrame {
         intentoText = intentos; //Como en Intelliji no me permite hacer static los Jlabel que creo en el .form, creo un JLabel statico y le añado el del form
 
         //Añadimos los icons duplicados a un Linkedlist
-        icons.add(new ImageIcon(getClass().getResource("/img/cruzazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/cruzazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/cuadradoazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/cuadradoazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/hazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/hazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/hexacirculoazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/hexacirculoazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/hexacuadradoazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/hexacuadradoazul.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/inca.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/inca.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/lazos2rojo.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/lazos2rojo.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/lazos3verde.png")));
-        icons.add(new ImageIcon(getClass().getResource("/img/lazos3verde.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/cruzazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/cruzazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/cuadradoazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/cuadradoazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/hazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/hazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/hexacirculoazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/hexacirculoazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/hexacuadradoazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/hexacuadradoazul.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/inca.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/inca.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/lazos2rojo.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/lazos2rojo.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/lazos3verde.png")));
+        icons.add(new ImageIcon(Parejas.class.getResource("/img/lazos3verde.png")));
 
         Collections.shuffle(icons); //Los desordenamos
 
