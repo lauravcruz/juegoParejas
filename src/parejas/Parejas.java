@@ -1,15 +1,19 @@
 package parejas;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.*;
-import static parejas.Inicio.inicio;
+
+import static parejas.Inicio.*;
 
 public class Parejas extends JFrame {
 
     private JPanel panel;
-    private JButton SALIRButton;
     private JLabel intentos;
     private JLabel f1c1;
     private JLabel f1c2;
@@ -27,6 +31,7 @@ public class Parejas extends JFrame {
     private JLabel f4c2;
     private JLabel f4c3;
     private JLabel f4c4;
+    private JLabel salir;
 
     static LinkedList<ImageIcon> icons = new LinkedList<>();
     static HashMap<Integer, ImageIcon> relacion_carta = new HashMap<>();
@@ -37,10 +42,11 @@ public class Parejas extends JFrame {
 
     public Parejas() {
 
-        panel.setSize(1250, 950);
-        panel.setBounds(0, 0, 1250, 950);
+        Border border = BorderFactory.createLineBorder(Color.YELLOW, 5);
 
-        PanelFondo panelfondo = new PanelFondo();
+        intentos.setBorder(border);
+
+        PanelFondo panelfondo = new PanelFondo(new ImageIcon(getClass().getResource("/img/fondo.png")));
         panelfondo.setSize(1250, 950);
         panelfondo.setBounds(0, 0, 1250, 950);
         panelfondo.setLayout(new CardLayout());
@@ -92,8 +98,8 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f1c1, 0);
-
             }
         });
 
@@ -101,6 +107,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f1c2, 1);
             }
         });
@@ -109,6 +116,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f1c3, 2);
             }
         });
@@ -117,6 +125,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f1c4, 3);
             }
         });
@@ -125,6 +134,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f2c1, 4);
             }
         });
@@ -133,6 +143,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f2c2, 5);
 
             }
@@ -142,6 +153,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f2c3, 6);
             }
         });
@@ -150,6 +162,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f2c4, 7);
             }
         });
@@ -158,6 +171,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f3c1, 8);
             }
         });
@@ -166,6 +180,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f3c2, 9);
             }
         });
@@ -174,6 +189,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f3c3, 10);
             }
         });
@@ -182,6 +198,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f3c4, 11);
 
             }
@@ -191,6 +208,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f4c1, 12);
 
             }
@@ -200,6 +218,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f4c2, 13);
             }
         });
@@ -208,6 +227,7 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f4c3, 14);
             }
         });
@@ -216,16 +236,17 @@ public class Parejas extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
                 revelarCarta(f4c4, 15);
             }
         });
-        SALIRButton.addMouseListener(new MouseAdapter() {
+        salir.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                reproducir(0);
 
                 inicio.setVisible(true);
-                inicio.juego.setVisible(false);
 
             }
         });
@@ -246,15 +267,18 @@ public class Parejas extends JFrame {
     public static void comparar() {
 
         n++; //Sumamos el intento CUANDO SE COMPARAN, y lo seteamos en la etiqueta de los intentos
-        intentoText.setText("INTENTOS: " + n);
+        intentoText.setText(":" + n);
 
         //Si el icono de las dos parejas es igual, las volvemos invisibles. Si no, se le setea el icon del reverso de la carta
         if (pareja.get(0).getIcon().toString().equals(pareja.get(1).getIcon().toString())) {
+            reproducir(1);
             pareja.get(0).setVisible(false);
             pareja.get(1).setVisible(false);
             ganar++;
 
+
         } else {
+            reproducir(2);
             pareja.get(0).setIcon(new ImageIcon(Parejas.class.getResource("/img/atras.png")));
             pareja.get(1).setIcon(new ImageIcon(Parejas.class.getResource("/img/atras.png")));
         }
@@ -266,19 +290,34 @@ public class Parejas extends JFrame {
             pareja.clear(); //Vaciamos el array de las parejas de ese turno
         }
 
-    }
+    public static void reproducir(int tipoSonido) {
 
-    class PanelFondo extends JPanel {
+        BufferedInputStream bis;
+        AudioInputStream ais;
 
-        private Image imagen;
-
-        public void paint(Graphics g) {
-            imagen = new ImageIcon(getClass().getResource("/img/fondo.png")).getImage();
-            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-            setOpaque(false);
-            super.paint(g);
+        if (tipoSonido == 0){
+             bis = new BufferedInputStream(Parejas.class.getResourceAsStream("/sound/click.wav"));
+        }else if (tipoSonido == 1){
+             bis = new BufferedInputStream(Parejas.class.getResourceAsStream("/sound/acierto.wav"));
+        }else{
+            bis = new BufferedInputStream(Parejas.class.getResourceAsStream("/sound/error.wav"));
         }
+
+        try {
+            ais = AudioSystem.getAudioInputStream(bis);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.start();
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    }
+
+
 
 
 
