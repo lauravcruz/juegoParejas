@@ -40,7 +40,7 @@ public class Parejas extends JFrame {
     private ArrayList<JLabel> pareja = new ArrayList();
     private int n = 0;
     private JLabel intentoText;
-    private int ganar = 8;
+    private int ganar = 0;
 
     public Parejas() {
 
