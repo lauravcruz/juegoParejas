@@ -3,10 +3,12 @@ package parejas;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 import static parejas.Inicio.*;
@@ -33,18 +35,14 @@ public class Parejas extends JFrame {
     private JLabel f4c4;
     private JLabel salir;
 
-    static LinkedList<ImageIcon> icons = new LinkedList<>();
-    static HashMap<Integer, ImageIcon> relacion_carta = new HashMap<>();
-    static ArrayList<JLabel> pareja = new ArrayList();
-    static int n = 0;
-    static JLabel intentoText;
-    static int ganar = 0;
+    private LinkedList<ImageIcon> icons = new LinkedList<>();
+    private HashMap<Integer, ImageIcon> relacion_carta = new HashMap<>();
+    private ArrayList<JLabel> pareja = new ArrayList();
+    private int n = 0;
+    private JLabel intentoText;
+    private int ganar = 8;
 
     public Parejas() {
-
-        Border border = BorderFactory.createLineBorder(Color.YELLOW, 5);
-
-        intentos.setBorder(border);
 
         PanelFondo panelfondo = new PanelFondo(new ImageIcon(getClass().getResource("/img/fondo.png")));
         panelfondo.setSize(1250, 950);
@@ -53,7 +51,10 @@ public class Parejas extends JFrame {
         panelfondo.add(panel, 0);
         setContentPane(panelfondo);
 
-        intentoText = intentos; //Como en Intelliji no me permite hacer static los Jlabel que creo en el .form, creo un JLabel statico y le añado el del form
+        Border border = BorderFactory.createLineBorder(Color.YELLOW, 5);
+        intentos.setBorder(border);
+
+        intentoText = intentos;
 
         //Añadimos los icons duplicados a un Linkedlist
         icons.add(new ImageIcon(Parejas.class.getResource("/img/cruzazul.png")));
@@ -245,14 +246,13 @@ public class Parejas extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 reproducir(0);
-
                 inicio.setVisible(true);
-
+                dispose(); //cierra la actual ventana
             }
         });
     }
 
-    public static void revelarCarta(JLabel carta, Integer i) {
+    public void revelarCarta(JLabel carta, Integer i) {
 
         if (pareja.size() == 2) { //Si ya se han seleccionado dos cartas, llamamos a comparar
             comparar();
@@ -264,7 +264,7 @@ public class Parejas extends JFrame {
         }
     }
 
-    public static void comparar() {
+    public void comparar() {
 
         n++; //Sumamos el intento CUANDO SE COMPARAN, y lo seteamos en la etiqueta de los intentos
         intentoText.setText(":" + n);
@@ -274,8 +274,7 @@ public class Parejas extends JFrame {
             reproducir(1);
             pareja.get(0).setVisible(false);
             pareja.get(1).setVisible(false);
-            ganar++;
-
+            ganar++; //esta variable cuenta el número de aciertos
 
         } else {
             reproducir(2);
@@ -283,9 +282,24 @@ public class Parejas extends JFrame {
             pareja.get(1).setIcon(new ImageIcon(Parejas.class.getResource("/img/atras.png")));
         }
 
-        if (ganar == 8) {
-            JFrame ganar = new JFrame();
-            JOptionPane.showMessageDialog(ganar, "¡ENHORABUENA, HAS GANADO!");
+        if (ganar == 8) { //cuando acierte las 8 parejas, se acaba el juego
+
+            UIManager ui = new UIManager(); //esto personaliza la ventana emergente del mensaje
+
+            ui.put("OptionPane.background", new Color(185, 33, 33));
+            ui.put("Panel.background", new Color(185, 33, 33));
+            ui.put("OptionPane.messageFont", new FontUIResource(new Font("Dubai", Font.TYPE1_FONT, 18)));
+            ui.put("OptionPane.messageForeground", new Color(254,236,0));
+
+            int resultado = JOptionPane.showConfirmDialog (null, "ENHORABUENA, HAS GANADO EN " + n
+                    + " INTENTOS " + "\n" + "¿Quieres jugar otra vez?","¡VICTORIA!", JOptionPane.YES_NO_OPTION);
+
+            if(resultado == JOptionPane.YES_OPTION) {
+                dispose();
+                Inicio.nuevaPartida();
+            }else {
+                System.exit(0);
+            }
         }
             pareja.clear(); //Vaciamos el array de las parejas de ese turno
         }
@@ -295,12 +309,14 @@ public class Parejas extends JFrame {
         BufferedInputStream bis;
         AudioInputStream ais;
 
-        if (tipoSonido == 0){
+        if (tipoSonido == 0){ //Según el parámetro introducido, vamos a reproducir x efecto:
              bis = new BufferedInputStream(Parejas.class.getResourceAsStream("/sound/click.wav"));
         }else if (tipoSonido == 1){
              bis = new BufferedInputStream(Parejas.class.getResourceAsStream("/sound/acierto.wav"));
-        }else{
+        }else if (tipoSonido == 2){
             bis = new BufferedInputStream(Parejas.class.getResourceAsStream("/sound/error.wav"));
+        }else {
+            bis = new BufferedInputStream(Parejas.class.getResourceAsStream("/sound/jungle.wav"));
         }
 
         try {
@@ -308,11 +324,13 @@ public class Parejas extends JFrame {
             Clip clip = AudioSystem.getClip();
             clip.open(ais);
             clip.start();
+            if (tipoSonido == 3){ //Si estamos controlando la canción, reproducir en bucle
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
-
     }
 
     }

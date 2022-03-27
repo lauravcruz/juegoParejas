@@ -21,8 +21,10 @@ public class Inicio extends JFrame{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     inicio.setVisible(true);
                     inicio.setSize(1250, 950);
+                    Parejas.reproducir(3);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -33,32 +35,38 @@ public class Inicio extends JFrame{
 
     public Inicio() {
 
+        //Creamos un JPanel personalizado para añadir una imagen como fondo (Intelliji no permite un layout absolute)
         PanelFondo fondoInicio = new PanelFondo(new ImageIcon(Parejas.class.getResource("/img/fondoGif.gif")));
+
         panelinicio.setSize(1250,950);
         panelinicio.setBounds(0, 0, 1250,950);
         fondoInicio.setSize(1250, 950);
         fondoInicio.setBounds(0,0,1250,950);
 
-        fondoInicio.add(panelinicio);
+        fondoInicio.add(panelinicio); //A este panel personalizado le añadimos el que construimos en el .form
 
         setContentPane(fondoInicio);
 
-        start.addMouseListener(new nuevaPartida());
+        start.addMouseListener(new start());
         salir.addMouseListener(new salir());
     }
 
-    class nuevaPartida extends MouseAdapter {
+    public static void nuevaPartida(){
+
+        Parejas.reproducir(0);
+        Parejas partida = new Parejas();
+        partida.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        partida.setVisible(true);
+        partida.setSize(1250, 950);
+        inicio.setVisible(false); //cerramos la ventana de inicio
+    }
+
+    class start extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
-            Parejas.reproducir(0);
-            Parejas partida = new Parejas();
-
-            partida.setVisible(true);
-            partida.setSize(1250, 950);
-
-            inicio.setVisible(false); //cerramos la ventana de inicio
+            nuevaPartida();
         }
 
         @Override

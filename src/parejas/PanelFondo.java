@@ -8,6 +8,9 @@ public class PanelFondo extends JPanel {
     private Image imagen;
     private ImageIcon fondo;
 
+    //Esta clase es para poner una imagen como background en un JPanel.
+    // Como la vamos a reutilizar, le pasamos por parámetro el icon
+
     public PanelFondo(ImageIcon fondo){
         this.fondo = fondo;
     }
