@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 import static parejas.Inicio.*;
