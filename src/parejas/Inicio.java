@@ -14,7 +14,6 @@ public class Inicio extends JFrame{
 
     static Inicio inicio = new Inicio(); //creo una ventana de inicio static para poder acceder a ella cuando pulse el botón de ir a otra ventana
 
-
     public static void main(String[] args) {
 
         EventQueue.invokeLater(new Runnable() {

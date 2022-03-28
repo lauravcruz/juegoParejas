@@ -10,8 +10,6 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.*;
 
-import static parejas.Inicio.*;
-
 public class Parejas extends JFrame {
 
     private JPanel panel;
@@ -245,7 +243,7 @@ public class Parejas extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 reproducir(0);
-                inicio.setVisible(true);
+                Inicio.inicio.setVisible(true);
                 dispose(); //cierra la actual ventana
             }
         });
@@ -283,7 +281,7 @@ public class Parejas extends JFrame {
 
         if (ganar == 8) { //cuando acierte las 8 parejas, se acaba el juego
 
-            UIManager ui = new UIManager(); //esto personaliza la ventana emergente del mensaje
+            UIManager ui = new UIManager(); //esto personaliza la ventana emergente del mensaje con las siguientes indicaciones
 
             ui.put("OptionPane.background", new Color(185, 33, 33));
             ui.put("Panel.background", new Color(185, 33, 33));
