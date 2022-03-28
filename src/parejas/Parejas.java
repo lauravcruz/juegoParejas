@@ -41,7 +41,7 @@ public class Parejas extends JFrame {
 
     public Parejas() {
 
-        PanelFondo panelfondo = new PanelFondo(new ImageIcon(getClass().getResource("/img/fondo.png")));
+        PanelFondo panelfondo = new PanelFondo(new ImageIcon(Parejas.class.getResource("/img/fondo.png")));
         panelfondo.setSize(1250, 950);
         panelfondo.setBounds(0, 0, 1250, 950);
         panelfondo.setLayout(new CardLayout());
